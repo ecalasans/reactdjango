@@ -1,0 +1,13 @@
+services:
+  dbpostgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      POSTGRES_USER: eric
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: coredb
+    ports:
+      - "5432:5432"
