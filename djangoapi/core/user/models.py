@@ -57,6 +57,8 @@ class User(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True, db_index=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    bio = models.TextField(null=True)
+    avatar = models.ImageField(null=True)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now_add=True)
 
