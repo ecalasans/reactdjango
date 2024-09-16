@@ -14,7 +14,11 @@ class RegisterSerializer(UserSerializer):
     class Meta:
         model = User
 
-        fields = ['id', 'bio', 'avatar', 'email', 'username', 'first_name', 'last_name', 'password']
+        fields = ['id', 'bio', 'avatar', 'email', 'username', 'first_name',
+                  'last_name', 'password', 'is_superuser']
 
-        def create(self, validated_data):
-            return User.objects.createUser(**validated_data)
+    def create(self, validated_data):
+        if validated_data['is_superuser'] == True:
+            return User.objects.createSuperUser(**validated_data)
+
+        return User.objects.createUser(**validated_data)
