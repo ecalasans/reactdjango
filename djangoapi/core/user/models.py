@@ -61,6 +61,7 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     bio = models.TextField(null=True)
     avatar = models.ImageField(null=True)
+    post_liked = models.ManyToManyField('core_post.Post', related_name='liked_by')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -73,3 +74,15 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def like(self, post):
+        # Adiciona um post que foi dado like por este usuário
+        return self.post_liked.add(post)
+
+    def removeLike(self, post):
+        # Remove o post da lista de posts curtidos por este usuário
+        return self.post_liked.remove(post)
+
+    def hasLiked(self, post):
+        # Retorna true se o usúario tiver dado algum like em algum post
+        return self.post_liked.filter(pk=post.pk).exists()
