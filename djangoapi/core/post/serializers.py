@@ -22,7 +22,7 @@ class PostSerializer(AbstractSerializer):
         rep = super().to_representation(instance)
         print(rep)
 
-        author = User.objects.getObjectByPublicId(rep['author'])
+        author = User.objects.get_object_by_public_id(rep['author'])
 
         rep['author'] = UserSerializer(author).data
 

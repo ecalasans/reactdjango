@@ -17,7 +17,7 @@ class UserManager(BaseUserManager, AbstractManager):
     #     except (ObjectDoesNotExist, ValueError, TypeError):
     #         return Http404
 
-    def createUser(self, username, email, password=None, **kwargs):
+    def create_user(self, username, email, password=None, **kwargs):
         if username is None:
             raise TypeError('Usuários devem ter um nome!')
 
@@ -33,7 +33,7 @@ class UserManager(BaseUserManager, AbstractManager):
 
         return user
 
-    def createSuperUser(self, username, email, password, **kwargs):
+    def create_superuser(self, username, email, password, **kwargs):
         if username is None:
             raise TypeError('Superusuários precisam ter um nome!')
 
@@ -43,7 +43,7 @@ class UserManager(BaseUserManager, AbstractManager):
         if password is None:
             raise TypeError('Uma senha precisa ser definida!')
 
-        super_user = self.createUser(username, email, password, **kwargs)
+        super_user = self.create_user(username, email, password, **kwargs)
         super_user.is_superuser = True
         super_user.is_staff = True
         super_user.save(using=self._db)

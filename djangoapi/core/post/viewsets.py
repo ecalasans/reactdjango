@@ -1,6 +1,8 @@
+from django.db.migrations import serializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from core.abstract.viewsets import AbstractViewSet
 from core.post.models import Post
@@ -28,4 +30,26 @@ class PostViewSet(AbstractViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    @action(detail=True, methods=['post'])
+    def like(self, request, *args, **kwargs):
+        post = self.get_object()
 
+        user = self.request.user
+
+        user.like(post)
+
+        serializer = self.serializer_class(post)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def removeLike(self, request, *args, **kwargs):
+        post = self.get_object()
+
+        user = self.request.user
+
+        user.removeLike(post)
+
+        serializer = self.serializer_class(post)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
