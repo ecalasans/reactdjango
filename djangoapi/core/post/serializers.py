@@ -18,6 +18,13 @@ class PostSerializer(AbstractSerializer):
             raise ValidationError('Você não pode criar um post por outro usuário!')
         return value
 
+
+    def validate_post(self, value):
+        if self.instance:
+            return self.instance.post
+        return value
+
+
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         print(rep)
