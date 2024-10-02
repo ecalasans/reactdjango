@@ -1,2 +1,5 @@
 .idea
 djangoapi/venv
+postagram/node_modules
+postagram/public
+postagram/*.json
